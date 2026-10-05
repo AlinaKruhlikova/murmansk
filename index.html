@@ -600,6 +600,9 @@ nav.menu { align-items:center; }
   .plan-top h2, .diary-head h2, .city-head h2, .route-head .desc, .aur-lead, #manifest { margin-left:auto !important; margin-right:auto !important; }
   .q-groups > div > div:last-child { justify-content:center; }
 }
+/* Узор ягеля (lichen-tile) — фон слева в календаре, планировщике, «Как добраться», дневнике. В светлой обсерватории — тёмный */
+.obs.lace::before { filter:invert(1) hue-rotate(180deg); opacity:.22; }
+.come.lace::before, .diary.lace::before { opacity:.3; }
 .chance-m.mono { letter-spacing:0 !important; grid-template-columns:repeat(12, minmax(0,1fr)); }
 .chance-m span { white-space:nowrap; display:flex; justify-content:center; }
 @media (max-width:576px) { .chance-m span:nth-child(even) { visibility:hidden; } }
@@ -701,7 +704,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
 <section class="strips" aria-label="Фото Мурманска и Териберки"><div class="strips-in" id="strips"></div></section>
 
 <!-- 3. Обсерватория: календарь света -->
-<section class="obs" id="ring">
+<section class="obs lace" id="ring">
   <div class="wrap">
     <div class="obs-top">
       <div class="obs-title">
@@ -740,7 +743,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
 </section>
 
 <!-- 8. Собрать поездку: квиз в капсуле + билет -->
-<section class="plan" id="plan"><div class="wrap">
+<section class="plan lace" id="plan"><div class="wrap">
   <div class="plan-top">
     <div><div class="mono">Посадка открыта · ваш маршрут</div><h2>Соберём поездку за&nbsp;минуту</h2></div>
     <p class="lead">Три вопроса — и&nbsp;билет-маршрут по&nbsp;свету ваших дней: где успеть до&nbsp;темноты, когда ехать в&nbsp;Териберку, в&nbsp;какие ночи ждать сияние.</p>
@@ -832,7 +835,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
 </section>
 
 <!-- Как добраться: табло -->
-<section class="come" id="come"><div class="wrap">
+<section class="come lace" id="come"><div class="wrap">
   <div class="come-head"><div><div class="mono">Табло прибытия · Мурманск</div><h2>Как добраться и&nbsp;что взять</h2></div><div class="board-clock mono" data-board-clock></div></div>
   <div class="board" role="table" aria-label="Как добраться до Мурманска">
     <div class="b-row b-th" role="row"><span>Транспорт</span><span>Откуда</span><span>В&nbsp;пути</span><span>Статус</span></div>
@@ -868,7 +871,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
 </div></section>
 
 <!-- 9. Дневник света: неделя сторис -->
-<section class="diary"><div class="wrap">
+<section class="diary lace"><div class="wrap">
   <div class="diary-head"><div><div class="mono">Дневник света · неделя</div><h2 data-diary-title>Каждый день света чуть меньше</h2></div>
     <p class="who">Каждое утро во&nbsp;ВКонтакте — сколько света и&nbsp;что успеть сегодня. Ведёт рубрику виртуальная героиня (ИИ-персонаж).</p></div>
   <div class="stories">
