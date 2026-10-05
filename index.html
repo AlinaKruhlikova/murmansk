@@ -296,7 +296,7 @@ header.top.menu-open { background:var(--bg); }
 .prac-col b { color:var(--text); font-weight:600; }
 .prac-note { font-size:13px; color:var(--muted); margin-top:20px; }
 .hero-cta { margin-top:20px; }
-@media (max-width:576px) { .scroll-hint { display:none; } .clock { font-size:56px; } }
+@media (max-width:576px) { .clock { font-size:56px; } }
 nav.menu .menu-cta { opacity:1; padding:8px 16px; border-radius:999px; background:var(--accent); color:var(--on-accent); }
 header.top:not(.solid) nav.menu .menu-cta { color:var(--on-accent); }
 @media (max-width:1100px) { .prac { grid-template-columns:1fr 1fr; } }
@@ -599,6 +599,18 @@ nav.menu { align-items:center; }
   .city-head, .come-head { flex-direction:column; align-items:center !important; }
   .plan-top h2, .diary-head h2, .city-head h2, .route-head .desc, .aur-lead, #manifest { margin-left:auto !important; margin-right:auto !important; }
   .q-groups > div > div:last-child { justify-content:center; }
+  /* 05.10 (Алина): «Дальше» на первом шаге — по центру (скрытая «Назад» не занимает место) */
+  .q-nav { gap:12px; }
+  .q-nav [data-prev][style*="hidden"] { display:none; }
+  /* 05.10 (Алина): «Ближайшие события» — по центру */
+  .obs-events, .obs-events .mono { text-align:center !important; }
+  .obs-events li button { text-align:center; justify-items:center; }
+  /* 05.10 (Алина): карточка «Сегодня» в дневнике — по центру, поля слева и справа равные, текст по центру */
+  .story-today { margin-left:auto !important; margin-right:auto !important; width:100%; }
+  .story-today .in { text-align:center; }
+  .story-today .num { margin-left:0 !important; }
+  /* Подсказка «Листайте — пройдут сутки» — сверху по центру неба (место ставит placeHint) */
+  .sky-ui .scroll-hint { text-shadow:0 1px 12px rgb(0 0 0 / .45); }
 }
 /* Узор ягеля (lichen-tile) — фон слева в календаре, планировщике, «Как добраться», дневнике. В светлой обсерватории — тёмный */
 .obs.lace::before { filter:invert(1) hue-rotate(180deg); opacity:.22; }
@@ -975,7 +987,8 @@ function makeSky(canvas, opts = {}) {
       o.font = `400 100px 'Dela Gothic One', sans-serif`;
       const fs = Math.min(100 * (W * .92) / o.measureText(opts.word).width, H * .26);
       o.font = `400 ${fs}px 'Dela Gothic One', sans-serif`; o.textAlign = 'center'; o.textBaseline = 'alphabetic';
-      const by = hy - H * .06;
+      // На телефоне слово мелкое, а сопки той же высоты: поднимаем, чтобы пики закрывали не больше ~30% букв (как на компьютере)
+      const by = W < 600 ? Math.min(hy - H * .06, hy - H * .09 * 1.25 + fs * .3) : hy - H * .06;
       o.fillStyle = '#fff'; o.fillText(opts.word, W / 2, by);
       o.globalCompositeOperation = 'source-in';
       const top = by - fs * .8, hgt = fs * .95, s = Math.max(W / img.naturalWidth, hgt / img.naturalHeight);
@@ -1807,6 +1820,12 @@ function placeHint() {
   const h = document.querySelector('.sky-ui .scroll-hint'), last = document.querySelector('.sky-days')?.lastElementChild, btn = document.querySelector('.hero-cta');
   if (!h || !last || !btn) return;
   h.style.visibility = 'hidden'; h.style.display = '';
+  // Телефон: между чипами и кнопкой места нет — подсказка сверху по центру неба, под шапкой
+  if (innerWidth <= 700) {
+    const top = (document.getElementById('top')?.getBoundingClientRect().height || 64) + 20;
+    Object.assign(h.style, { left: '50%', top: `${top}px`, bottom: 'auto', transform: 'translateX(-50%)', visibility: '' });
+    return;
+  }
   const ui = h.parentElement.getBoundingClientRect(), c = last.getBoundingClientRect(), b = btn.getBoundingClientRect(), gap = b.left - c.right;
   if (b.top > c.bottom || gap < h.offsetWidth + 64) { h.style.display = 'none'; return; }
   Object.assign(h.style, { left: `${c.right + gap / 2 - ui.left}px`, top: `${(b.top + b.height / 2 + c.top + c.height / 2) / 2 - ui.top}px`, bottom: 'auto', transform: 'translate(-50%, -50%)', visibility: '' });
