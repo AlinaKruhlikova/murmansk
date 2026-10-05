@@ -586,6 +586,20 @@ nav.menu { align-items:center; }
   .aur-panel .aur-photo img { flex:1; width:100%; min-width:0; min-height:200px; aspect-ratio:auto; }
 }
 @media (max-width:1000px) { .aur-wrap { grid-template-columns:minmax(0,1fr) !important; } }
+/* Телефон: заголовки, подводки, кнопки и короткие блоки — по центру (решение Алины 05.10).
+   Таблицы и списки (талон, табло, рюкзак, события, остановки маршрута) — по левому краю: строки сравнивают между собой. */
+@media (max-width:700px) {
+  .sky-ui .wrap > div, .sky-side, #manifest,
+  .obs-title, .obs-lead, .obs-side:not(.obs-events), .plan-top, .q-title, .q-groups .mono,
+  .city-head, .place-card h3, .place-card p, .routes-head, .route-head,
+  .aur-main, .aur-steps li, .come-head, .diary-head, .diary-head .who, .diary blockquote,
+  footer .cols > div, footer h4, footer li { text-align:center !important; }
+  .sky-days, .q-nav, .q-groups .opts, .ring-hint, .year-legend, .route-dist { justify-content:center !important; }
+  .obs .ring-actions { align-items:center !important; }
+  .city-head, .come-head { flex-direction:column; align-items:center !important; }
+  .plan-top h2, .diary-head h2, .city-head h2, .route-head .desc, .aur-lead, #manifest { margin-left:auto !important; margin-right:auto !important; }
+  .q-groups > div > div:last-child { justify-content:center; }
+}
 .chance-m.mono { letter-spacing:0 !important; grid-template-columns:repeat(12, minmax(0,1fr)); }
 .chance-m span { white-space:nowrap; display:flex; justify-content:center; }
 @media (max-width:576px) { .chance-m span:nth-child(even) { visibility:hidden; } }
